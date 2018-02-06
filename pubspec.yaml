@@ -1,0 +1,11 @@
+name: cli_menu
+description: A simple menu (picker) that works on the command line.
+version: 0.0.1
+#homepage: https://www.example.com
+author: Filip Hracek <filip.hracek@gmail.com>
+
+environment:
+  sdk: '>=1.20.1 <2.0.0'
+
+dependencies:
+  cli_util: ^0.1.2+1
