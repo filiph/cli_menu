@@ -1,7 +1,8 @@
 import 'package:cli_menu/cli_menu.dart';
 
 void main() {
-  final menu = new Menu(["Red", "Green", "Orange"]);
+  print("Pick favorite color:");
+  final menu = new Menu(["Red", "Green", "Orange", "Fuchsia"]);
   final result = menu.choose();
-  print('Chosen: $result');
+  print("You picked: $result");
 }
