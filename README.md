@@ -1,6 +1,6 @@
 # cli_menu
 
-![Screencast of cli_menu in action](https://raw.githubusercontent.com/filiph/cli_menu/master/example/example.dart)
+![Screencast of cli_menu in action](https://raw.githubusercontent.com/filiph/cli_menu/master/example/mac_screencast.gif)
 
 A library for adding simple menus to console (CLI) apps. It will print
 a list of options and then let user choose via keyboard up and down arrows
