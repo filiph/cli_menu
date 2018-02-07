@@ -35,8 +35,8 @@ class Menu<T> {
   ///
   /// Provide own [stdin] and [stdout] for testing or for custom environments.
   /// These default to the system STD IN and STD OUT.
-  Menu(List<T> options, {bool useAnsi, io.Stdin stdin, io.Stdout stdout, })
-      : _options = options,
+  Menu(Iterable<T> options, {bool useAnsi, io.Stdin stdin, io.Stdout stdout, })
+      : _options = new List.unmodifiable(options),
         _useAnsi = useAnsi ?? Ansi.terminalSupportsAnsi,
         _stdin = stdin ?? io.stdin,
         _stdout = stdout ?? io.stdout;
