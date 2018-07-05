@@ -15,6 +15,10 @@ class Menu<T> {
   /// The provided options.
   final List<T> _options;
 
+  /// List of single-char strings that will be recognized as "select" actions
+  /// on top of the usual _enter_ and _space_ keys.
+  final List<String> _modifierKeys;
+
   /// Whether or not to use ANSI. By default, ANSI capability is autodetected.
   final bool _useAnsi;
 
@@ -35,29 +39,43 @@ class Menu<T> {
   ///
   /// Provide own [stdin] and [stdout] for testing or for custom environments.
   /// These default to the system STD IN and STD OUT.
-  Menu(Iterable<T> options, {bool useAnsi, io.Stdin stdin, io.Stdout stdout, })
+  Menu(
+    Iterable<T> options, {
+    bool useAnsi,
+    io.Stdin stdin,
+    io.Stdout stdout,
+    List<String> modifierKeys: const [],
+  })
       : _options = new List.unmodifiable(options),
         _useAnsi = useAnsi ?? Ansi.terminalSupportsAnsi,
         _stdin = stdin ?? io.stdin,
-        _stdout = stdout ?? io.stdout;
+        _stdout = stdout ?? io.stdout,
+        _modifierKeys = modifierKeys {
+    _ensureModifierKeysValid();
+  }
 
   /// Lists the options and lets user choose, then returns the result.
   /// This is a blocking operation.
   ///
   /// Returns the [MenuResult].
   MenuResult<T> choose() {
-    int index;
+    _SimpleResult result;
     if (_useAnsi) {
-      index = _chooseAnsi();
+      result = _chooseAnsi();
     } else {
-      index = _chooseNonAnsi();
+      result = _chooseNonAnsi();
     }
 
-    return new MenuResult(index, _options[index]);
+    return new MenuResult(
+      result.index,
+      _options[result.index],
+      modifierKey: result.modifierKey,
+    );
   }
 
-  int _chooseAnsi() {
+  _SimpleResult _chooseAnsi() {
     int result;
+    String modifierKey;
     int currentIndex = 0;
     final prevLineMode = _stdin.lineMode;
     final prevEchoMode = _stdin.echoMode;
@@ -83,6 +101,17 @@ class Menu<T> {
         break;
       }
 
+      for (final key in _modifierKeys) {
+        if (firstEscape == key.codeUnitAt(0)) {
+          // Choice was selected with a modifier key.
+          modifierKey = key;
+          result = currentIndex;
+          break;
+        }
+      }
+      // Break from outer loop if needed.
+      if (modifierKey != null) break;
+
       // When user presses up or down arrow in the terminal, the program
       // receives a string of bytes: 27, 91, and then 65 (up) or 66 (down).
       if (firstEscape != 27) {
@@ -104,10 +133,10 @@ class Menu<T> {
 
     _stdin.lineMode = prevLineMode;
     _stdin.echoMode = prevEchoMode;
-    return result;
+    return new _SimpleResult(result, modifierKey);
   }
 
-  int _chooseNonAnsi() {
+  _SimpleResult _chooseNonAnsi() {
     for (int i = 0; i < _options.length; i += 1) {
       final humanIndex = i + 1;
       _stdout.write("$humanIndex".padLeft(3));
@@ -115,8 +144,16 @@ class Menu<T> {
       _stdout.writeln(_options[i].toString());
     }
     int result;
+    String modifierKey;
     while (result == null) {
-      final input = _stdin.readLineSync();
+      String input = _stdin.readLineSync();
+      for (final key in _modifierKeys) {
+        if (input.startsWith(key)) {
+          modifierKey = key;
+          input = input.substring(1);
+          break;
+        }
+      }
       result = int.parse(input, onError: (_) => null);
       if (result == null) {
         _stdout.writeln("Bad input: '$input'. Expecting a number.");
@@ -126,7 +163,19 @@ class Menu<T> {
         result = null;
       }
     }
-    return result - 1;
+    return new _SimpleResult(result - 1, modifierKey);
+  }
+
+  void _ensureModifierKeysValid() {
+    for (final key in _modifierKeys) {
+      if (key.length != 1) {
+        throw new ArgumentError("Modifier keys must be provided "
+            "as single-char strings.");
+      }
+      if (key.codeUnitAt(0) > 255) {
+        throw new ArgumentError("Modifier keys must be 8-bit ASCII.");
+      }
+    }
   }
 
   /// https://en.wikipedia.org/wiki/ANSI_escape_code#Escape_sequences
@@ -144,4 +193,11 @@ class Menu<T> {
     if (input.length <= maxLength) return input;
     return input.substring(0, maxLength - 3) + "...";
   }
+}
+
+class _SimpleResult {
+  final int index;
+  final String modifierKey;
+
+  const _SimpleResult(this.index, this.modifierKey);
 }
