@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.1
+
+- Upgrade to Dart 2
+
 ## 0.2.0
 
 - Added option to select choices with modifier keys (instead of

@@ -154,7 +154,7 @@ class Menu<T> {
           break;
         }
       }
-      result = int.parse(input, onError: (_) => null);
+      result = int.tryParse(input);
       if (result == null) {
         _stdout.writeln("Bad input: '$input'. Expecting a number.");
       } else if (result < 1 || result > _options.length) {
