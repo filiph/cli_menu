@@ -1,4 +1,4 @@
-# cli_menu
+# cli_menu [![Build Status](https://www.travis-ci.org/filiph/cli_menu.svg?branch=master)](https://www.travis-ci.org/filiph/cli_menu)
 
 ![Screencast of cli_menu in action](https://raw.githubusercontent.com/filiph/cli_menu/master/example/mac_screencast.gif)
 

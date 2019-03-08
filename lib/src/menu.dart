@@ -44,9 +44,8 @@ class Menu<T> {
     bool useAnsi,
     io.Stdin stdin,
     io.Stdout stdout,
-    List<String> modifierKeys: const [],
-  })
-      : _options = new List.unmodifiable(options),
+    List<String> modifierKeys = const [],
+  })  : _options = List.unmodifiable(options),
         _useAnsi = useAnsi ?? Ansi.terminalSupportsAnsi,
         _stdin = stdin ?? io.stdin,
         _stdout = stdout ?? io.stdout,
@@ -66,7 +65,7 @@ class Menu<T> {
       result = _chooseNonAnsi();
     }
 
-    return new MenuResult(
+    return MenuResult(
       result.index,
       _options[result.index],
       modifierKey: result.modifierKey,
@@ -133,7 +132,7 @@ class Menu<T> {
 
     _stdin.lineMode = prevLineMode;
     _stdin.echoMode = prevEchoMode;
-    return new _SimpleResult(result, modifierKey);
+    return _SimpleResult(result, modifierKey);
   }
 
   _SimpleResult _chooseNonAnsi() {
@@ -163,17 +162,17 @@ class Menu<T> {
         result = null;
       }
     }
-    return new _SimpleResult(result - 1, modifierKey);
+    return _SimpleResult(result - 1, modifierKey);
   }
 
   void _ensureModifierKeysValid() {
     for (final key in _modifierKeys) {
       if (key.length != 1) {
-        throw new ArgumentError("Modifier keys must be provided "
+        throw ArgumentError("Modifier keys must be provided "
             "as single-char strings.");
       }
       if (key.codeUnitAt(0) > 255) {
-        throw new ArgumentError("Modifier keys must be 8-bit ASCII.");
+        throw ArgumentError("Modifier keys must be 8-bit ASCII.");
       }
     }
   }
