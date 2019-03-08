@@ -1,0 +1,4 @@
+language: dart
+dart_task:
+  - dartanalyzer: --fatal-warnings lib example
+  - dartfmt
