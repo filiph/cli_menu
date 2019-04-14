@@ -1,6 +1,6 @@
 name: cli_menu
 description: A simple menu (picker) that works on the command line.
-version: 0.2.1
+version: 0.2.2
 homepage: https://github.com/filiph/cli_menu
 author: Filip Hracek <filip.hracek@gmail.com>
 

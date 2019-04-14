@@ -188,7 +188,8 @@ class Menu<T> {
   /// When no truncation is needed, returns the original string. Otherwise,
   /// ends the string with `"..."`.
   String _sanitizeLength(String input) {
-    const int maxLength = 60;
+    // Default terminal width (80) minus the leading characters.
+    const int maxLength = 80 - "-->   1) ".length;
     if (input.length <= maxLength) return input;
     return input.substring(0, maxLength - 3) + "...";
   }
