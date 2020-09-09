@@ -10,7 +10,7 @@ import 'package:cli_util/cli_logging.dart';
 /// The only requirement for [T] is that it has a sane [toString] method. That
 /// will be used to list the options.
 class Menu<T> {
-  static const String _ansiEscape = "\x1b[";
+  static const String _ansiEscape = '\x1b[';
 
   /// The provided options.
   final List<T> _options;
@@ -75,25 +75,25 @@ class Menu<T> {
   _SimpleResult _chooseAnsi() {
     int result;
     String modifierKey;
-    int currentIndex = 0;
+    var currentIndex = 0;
     final prevLineMode = _stdin.lineMode;
     final prevEchoMode = _stdin.echoMode;
     _stdin.lineMode = false;
     _stdin.echoMode = false;
-    for (int i = 0; i < _options.length; i++) {
+    for (var i = 0; i < _options.length; i++) {
       // Make room for the options first.
       _stdout.writeln();
     }
     while (result == null) {
       _moveUp(_options.length);
-      for (int i = 0; i < _options.length; i += 1) {
+      for (var i = 0; i < _options.length; i += 1) {
         final humanIndex = i + 1;
-        _stdout.write(i == currentIndex ? "--> " : "    ");
-        _stdout.write("$humanIndex".padLeft(3));
-        _stdout.write(") ");
+        _stdout.write(i == currentIndex ? '--> ' : '    ');
+        _stdout.write('$humanIndex'.padLeft(3));
+        _stdout.write(') ');
         _stdout.writeln(_sanitizeLength(_options[i].toString()));
       }
-      int firstEscape = _stdin.readByteSync();
+      var firstEscape = _stdin.readByteSync();
       if (firstEscape == 10 || firstEscape == 32) {
         // Space or enter was pressed.
         result = currentIndex;
@@ -136,16 +136,16 @@ class Menu<T> {
   }
 
   _SimpleResult _chooseNonAnsi() {
-    for (int i = 0; i < _options.length; i += 1) {
+    for (var i = 0; i < _options.length; i += 1) {
       final humanIndex = i + 1;
-      _stdout.write("$humanIndex".padLeft(3));
-      _stdout.write(") ");
+      _stdout.write('$humanIndex'.padLeft(3));
+      _stdout.write(') ');
       _stdout.writeln(_options[i].toString());
     }
     int result;
     String modifierKey;
     while (result == null) {
-      String input = _stdin.readLineSync();
+      var input = _stdin.readLineSync();
       for (final key in _modifierKeys) {
         if (input.startsWith(key)) {
           modifierKey = key;
@@ -158,7 +158,7 @@ class Menu<T> {
         _stdout.writeln("Bad input: '$input'. Expecting a number.");
       } else if (result < 1 || result > _options.length) {
         _stdout.writeln("Bad input: '$input'. "
-            "Expecting number from 1 to ${_options.length}.");
+            'Expecting number from 1 to ${_options.length}.');
         result = null;
       }
     }
@@ -168,18 +168,18 @@ class Menu<T> {
   void _ensureModifierKeysValid() {
     for (final key in _modifierKeys) {
       if (key.length != 1) {
-        throw ArgumentError("Modifier keys must be provided "
-            "as single-char strings.");
+        throw ArgumentError('Modifier keys must be provided '
+            'as single-char strings.');
       }
       if (key.codeUnitAt(0) > 255) {
-        throw ArgumentError("Modifier keys must be 8-bit ASCII.");
+        throw ArgumentError('Modifier keys must be 8-bit ASCII.');
       }
     }
   }
 
   /// https://en.wikipedia.org/wiki/ANSI_escape_code#Escape_sequences
   void _moveUp(int count) {
-    _stdout.write("$_ansiEscape${count}A");
+    _stdout.write('$_ansiEscape${count}A');
   }
 
   /// Truncates the string to a length that will fit into one line on most
@@ -189,9 +189,9 @@ class Menu<T> {
   /// ends the string with `"..."`.
   String _sanitizeLength(String input) {
     // Default terminal width (80) minus the leading characters.
-    const int maxLength = 80 - "-->   1) ".length;
+    const maxLength = 80 - '-->   1) '.length;
     if (input.length <= maxLength) return input;
-    return input.substring(0, maxLength - 3) + "...";
+    return input.substring(0, maxLength - 3) + '...';
   }
 }
 

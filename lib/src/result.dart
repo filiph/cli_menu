@@ -15,8 +15,8 @@ class MenuResult<T> {
   @override
   String toString() {
     if (modifierKey != null) {
-      return "$value (with $modifierKey)";
+      return '$value (with $modifierKey)';
     }
-    return "$value";
+    return '$value';
   }
 }

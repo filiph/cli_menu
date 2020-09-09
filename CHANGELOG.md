@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.2
+
+- Fix some linter warnings, upgrade dependencies
+
 ## 0.2.1
 
 - Upgrade to Dart 2
