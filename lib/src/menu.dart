@@ -41,9 +41,9 @@ class Menu<T> {
   /// These default to the system STD IN and STD OUT.
   Menu(
     Iterable<T> options, {
-    bool useAnsi,
-    io.Stdin stdin,
-    io.Stdout stdout,
+    bool? useAnsi,
+    io.Stdin? stdin,
+    io.Stdout? stdout,
     List<String> modifierKeys = const [],
   })  : _options = List.unmodifiable(options),
         _useAnsi = useAnsi ?? Ansi.terminalSupportsAnsi,
@@ -73,8 +73,8 @@ class Menu<T> {
   }
 
   _SimpleResult _chooseAnsi() {
-    int result;
-    String modifierKey;
+    int? result;
+    String? modifierKey;
     var currentIndex = 0;
     final prevLineMode = _stdin.lineMode;
     final prevEchoMode = _stdin.echoMode;
@@ -132,7 +132,7 @@ class Menu<T> {
 
     _stdin.lineMode = prevLineMode;
     _stdin.echoMode = prevEchoMode;
-    return _SimpleResult(result, modifierKey);
+    return _SimpleResult(result!, modifierKey);
   }
 
   _SimpleResult _chooseNonAnsi() {
@@ -142,10 +142,10 @@ class Menu<T> {
       _stdout.write(') ');
       _stdout.writeln(_options[i].toString());
     }
-    int result;
-    String modifierKey;
+    int? result;
+    String? modifierKey;
     while (result == null) {
-      var input = _stdin.readLineSync();
+      var input = _stdin.readLineSync() ?? '';
       for (final key in _modifierKeys) {
         if (input.startsWith(key)) {
           modifierKey = key;
@@ -197,7 +197,7 @@ class Menu<T> {
 
 class _SimpleResult {
   final int index;
-  final String modifierKey;
+  final String? modifierKey;
 
   const _SimpleResult(this.index, this.modifierKey);
 }

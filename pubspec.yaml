@@ -2,14 +2,14 @@ name: cli_menu
 description: >
   A simple menu (picker) that works on the command line. Works on Linux,
   Mac and Windows. Supports choosing by arrows on ANSI terminals.
-version: 0.2.3
+version: 0.3.0-nullsafety.0
 homepage: https://github.com/filiph/cli_menu
 
 environment:
-  sdk: '>=1.20.1 <3.0.0'
+  sdk: '>=2.12.0-0 <3.0.0'
 
 dependencies:
-  cli_util: ^0.2.0
+  cli_util: ^0.3.0-nullsafety.0
 
 dev_dependencies:
   pedantic: ^1.9.2

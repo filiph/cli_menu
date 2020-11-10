@@ -8,7 +8,7 @@ class MenuResult<T> {
 
   final T value;
 
-  final String modifierKey;
+  final String? modifierKey;
 
   MenuResult(this.index, this.value, {this.modifierKey});
 
