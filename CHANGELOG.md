@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.1
+
+- Added 'vimlike' bindings for j/k to navigate the menu.
+- Added 'vimlike' binding for l shortcut by default.
+
 ## 0.2.3
 
 - Fix some linter warnings, upgrade dependencies
