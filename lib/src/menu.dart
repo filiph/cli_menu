@@ -44,7 +44,7 @@ class Menu<T> {
     bool? useAnsi,
     io.Stdin? stdin,
     io.Stdout? stdout,
-    List<String> modifierKeys = const [],
+    List<String> modifierKeys = const ['l'],
   })  : _options = List.unmodifiable(options),
         _useAnsi = useAnsi ?? Ansi.terminalSupportsAnsi,
         _stdin = stdin ?? io.stdin,
@@ -110,6 +110,19 @@ class Menu<T> {
       }
       // Break from outer loop if needed.
       if (modifierKey != null) break;
+      if ([106, 107].contains(firstEscape)) {
+        // j,k keys were pressed handle that.
+        switch (firstEscape) {
+          // j key?
+          case 106:
+            currentIndex = (currentIndex + 1) % _options.length;
+            continue;
+          // k key?
+          case 107:
+            currentIndex = (currentIndex - 1) % _options.length;
+            continue;
+        }
+      }
 
       // When user presses up or down arrow in the terminal, the program
       // receives a string of bytes: 27, 91, and then 65 (up) or 66 (down).
