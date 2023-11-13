@@ -1,3 +1,8 @@
+## 0.4.0+1
+
+- Remove Travis CI (it hadn't been working for quite some time)
+- Improvements to README and package description
+
 ## 0.4.0
 
 - Upgrade to Dart 3 and latest dependencies

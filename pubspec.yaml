@@ -1,8 +1,9 @@
 name: cli_menu
 description: >
-  A simple menu (picker) that works on the command line. Works on Linux,
-  Mac and Windows. Supports choosing by arrows on ANSI terminals.
-version: 0.4.0
+  A simple command-line menu (picker) compatible with Linux,
+  Mac and Windows. It supports selection by using arrow keys
+  on ANSI terminals.
+version: 0.4.0+1
 homepage: https://github.com/filiph/cli_menu
 
 environment:

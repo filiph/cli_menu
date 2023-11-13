@@ -1,13 +1,14 @@
-# cli_menu [![Build Status](https://www.travis-ci.org/filiph/cli_menu.svg?branch=master)](https://www.travis-ci.org/filiph/cli_menu)
+# cli_menu
 
 ![Screencast of cli_menu in action](https://raw.githubusercontent.com/filiph/cli_menu/master/example/mac_screencast.gif)
 
-A library for adding simple menus to console (CLI) apps. It will print
-a list of options and then let user choose via keyboard up and down arrows
-(when ANSI is available), or via a prompt for a number.
+A library for adding simple menus to console (CLI) apps.
+It displays a list of options and then allows the user to make a selection
+using the up and down arrows on the keyboard (when ANSI is available),
+or by typing a number as a prompt.
 
-This library is conservative – it prefers compatibility to fancy
-ANSI features and unicode glyphs.
+This library is conservative - it favors compatibility
+over fancy ANSI features and Unicode glyphs.
 
 ## Features and bugs
 
