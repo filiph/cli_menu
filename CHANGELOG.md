@@ -1,4 +1,10 @@
-# Changelog
+## 0.4.0
+
+- Upgrade to Dart 3 and latest dependencies
+
+## 0.3.0
+
+- Upgrade to null safety
 
 ## 0.2.3
 

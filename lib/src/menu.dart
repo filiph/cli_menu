@@ -191,7 +191,7 @@ class Menu<T> {
     // Default terminal width (80) minus the leading characters.
     const maxLength = 80 - '-->   1) '.length;
     if (input.length <= maxLength) return input;
-    return input.substring(0, maxLength - 3) + '...';
+    return '${input.substring(0, maxLength - 3)}...';
   }
 }
 
